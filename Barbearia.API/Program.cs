@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Barbearia.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,10 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string sqlServer = builder.Configuration.GetConnectionString("DefaultConnection");
+string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
-    options.UseSqlServer(sqlServer);
+    options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection));
 );
 
 var app = builder.Build();
